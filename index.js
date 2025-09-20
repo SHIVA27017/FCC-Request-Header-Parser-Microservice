@@ -25,14 +25,19 @@ app.get("/", function (req, res) {
 });
 
 app.get("/api/whoami", (request, response) => {
-  console.log(`ipaddress: ${request.ip}`);
-  console.log(`software: ${request.headers["user-agent"]}`);
-  console.log(`lanquage: ${request.headers["accept-language"]}`);
-  return response.json({
-    ipaddress: request.ip,
-    language: request.headers["accept-language"],
-    software: request.headers["user-agent"],
-  });
+  try {
+    console.log(`ipaddress: ${request.ip}`);
+    console.log(`software: ${request.headers["user-agent"]}`);
+    console.log(`lanquage: ${request.headers["accept-language"]}`);
+    return response.json({
+      ipaddress: request.ip,
+      language: request.headers["accept-language"],
+      software: request.headers["user-agent"],
+    });
+  } catch (error) {
+    console.log(error.message);
+    return response.status(500).json("Internal server error!");
+  }
 });
 
 // listen for requests :)
